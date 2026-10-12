@@ -12,6 +12,8 @@ backend/database/*.db
 *.sqlite
 *.sqlite3
 *.db-journal
+*.db-shm
+*.db-wal
 
 # Environment variables
 .env

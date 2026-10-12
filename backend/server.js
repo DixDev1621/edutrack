@@ -3,6 +3,7 @@ const app = require('./src/app');
 const { initializeDatabase } = require('./src/config/db');
 
 const PORT = process.env.PORT || 5000;
+const HOST = '0.0.0.0';
 
 async function startServer() {
   try {
@@ -10,12 +11,12 @@ async function startServer() {
     await initializeDatabase();
     console.log('Database connected & initialized successfully.');
 
-    const server = app.listen(PORT, () => {
+    const server = app.listen(PORT, HOST, () => {
       console.log(`===============================================`);
       console.log(` Student Management System API`);
-      console.log(` Running on: http://localhost:${PORT}`);
-      console.log(` Health check: http://localhost:${PORT}/api/health`);
-      console.log(` Students API: http://localhost:${PORT}/api/students`);
+      console.log(` Running on: http://${HOST}:${PORT}`);
+      console.log(` Health check: http://${HOST}:${PORT}/api/health`);
+      console.log(` Students API: http://${HOST}:${PORT}/api/students`);
       console.log(` Environment: ${process.env.NODE_ENV || 'development'}`);
       console.log(`===============================================`);
     });

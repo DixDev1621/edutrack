@@ -239,6 +239,9 @@ git push -u origin main
 
 ### Part 1: Deploy Backend to Render (Free Web Service)
 
+> [!IMPORTANT]
+> **GLIBC / Native Addon Fix:** Render runs a Debian/Ubuntu container where prebuilt native binaries might conflict with system GLIBC versions (e.g. `GLIBC_2.38 not found` error under experimental Node 26). Pinning **Node 22.x** and building SQLite3 from source with `npm rebuild sqlite3 --build-from-source` compiles the native addon against Render's system GLIBC, ensuring 100% stability.
+
 1. Create a free account at [Render](https://render.com).
 2. Click **New +** → **Web Service**.
 3. Connect your GitHub repository.
@@ -247,11 +250,13 @@ git push -u origin main
    - **Region:** Closest to your users (e.g., Oregon, Frankfurt)
    - **Root Directory:** `backend`
    - **Runtime:** `Node`
-   - **Build Command:** `npm install`
+   - **Build Command:** `npm install && npm rebuild sqlite3 --build-from-source`
    - **Start Command:** `node server.js`
    - **Instance Type:** `Free`
 5. Under **Environment Variables**, add:
+   - `NODE_VERSION` = `22.x` *(Ensures stable Node.js 22 LTS is used)*
    - `NODE_ENV` = `production`
+   - `PORT` = `10000` *(Or leave Render to supply PORT automatically; backend binds to `0.0.0.0`)*
    - `CLIENT_ORIGIN` = `*` (or your Vercel domain once deployed)
 6. Click **Deploy Web Service**.
 7. Once deployed, copy your backend URL:

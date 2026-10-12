@@ -2,6 +2,8 @@ node_modules/
 database/*.db
 database/*.sqlite
 database/*.db-journal
+database/*.db-shm
+database/*.db-wal
 .env
 .env.local
 npm-debug.log*
